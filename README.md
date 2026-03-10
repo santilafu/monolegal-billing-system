@@ -180,16 +180,38 @@ Los emails se envian a traves de [Mailtrap](https://mailtrap.io/) en desarrollo.
 
 ### Verificar los datos en MongoDB Atlas
 
+> **Acceso temporal — valido hasta el 17 de marzo de 2026 (1 semana)**
+>
+> | Campo | Valor |
+> |---|---|
+> | Usuario | `Monolegal` |
+> | Contraseña | `1234` |
+> | Cluster | `cluster0.lknqnjv.mongodb.net` |
+
 1. Ve a [cloud.mongodb.com](https://cloud.mongodb.com).
-2. Entra al cluster → **Browse Collections**.
-3. Selecciona `MonolegalDB` → `Facturas`.
-4. Verifica que los documentos tienen el campo `estado` actualizado correctamente.
+2. Inicia sesion con el usuario `Monolegal` y contraseña `1234`.
+3. Entra al cluster → **Browse Collections**.
+4. Selecciona `MonolegalDB` → `Facturas`.
+5. Verifica que los documentos tienen el campo `estado` actualizado correctamente.
 
 ---
 
 ## Variables de configuracion
 
 El archivo `appsettings.json` incluye credenciales de desarrollo listas para usar (MongoDB Atlas + Mailtrap). No requiere configuracion adicional para probar el proyecto.
+
+### Acceso a MongoDB Atlas
+
+El proyecto usa un usuario dedicado con acceso limitado a la base de datos `MonolegalDB`:
+
+| Campo | Valor |
+|---|---|
+| Usuario | `Monolegal` |
+| Contraseña | `1234` |
+| Base de datos | `MonolegalDB` |
+| Coleccion | `Facturas` |
+
+> **Aviso:** Este acceso es temporal y expira el **17 de marzo de 2026**. Pasada esa fecha sera necesario renovar las credenciales en MongoDB Atlas y actualizar el `appsettings.json`.
 
 > Los emails de prueba se capturan en [Mailtrap](https://mailtrap.io/) y no llegan a destinatarios reales.
 
