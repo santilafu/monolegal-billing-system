@@ -12,8 +12,7 @@ monolegal-frontend/dist/
 monolegal-frontend/.angular/
 
 # Secrets (no subir credenciales reales)
-appsettings.json
-appsettings.*.json
+appsettings.Production.json
 
 # OS
 .DS_Store
