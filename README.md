@@ -100,38 +100,7 @@ git clone <url-del-repositorio>
 cd Monolegal.BillingSystem
 ```
 
-### 2. Configurar el backend
-
-El archivo `appsettings.json` no esta incluido en el repositorio por contener credenciales sensibles. Debes crearlo manualmente en `Monolegal.API/appsettings.json` con el siguiente contenido:
-
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*",
-  "MongoDbSettings": {
-    "ConnectionString": "mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/?appName=<app>",
-    "DatabaseName": "MonolegalDB",
-    "CollectionName": "Facturas"
-  },
-  "EmailSettings": {
-    "SmtpHost": "<smtp-host>",
-    "SmtpPort": 587,
-    "SmtpUser": "<smtp-user>",
-    "SmtpPassword": "<smtp-password>",
-    "FromAddress": "noreply@monolegal.com",
-    "FromName": "Monolegal Billing"
-  }
-}
-```
-
-Sustituye los valores entre `< >` por tus credenciales reales.
-
-### 3. Iniciar el backend
+### 2. Iniciar el backend
 
 ```bash
 cd Monolegal.API
@@ -220,11 +189,11 @@ Los emails se envian a traves de [Mailtrap](https://mailtrap.io/) en desarrollo.
 
 ## Variables de configuracion
 
-El archivo `appsettings.json` esta excluido del repositorio por seguridad. Consulta el paso 2 de instalacion para ver la estructura completa.
+El archivo `appsettings.json` incluye credenciales de desarrollo listas para usar (MongoDB Atlas + Mailtrap). No requiere configuracion adicional para probar el proyecto.
 
-> Para desarrollo se recomienda [Mailtrap](https://mailtrap.io/) como servidor SMTP de prueba. Los emails no llegan a destinatarios reales.
+> Los emails de prueba se capturan en [Mailtrap](https://mailtrap.io/) y no llegan a destinatarios reales.
 
-> En produccion gestiona los secretos con variables de entorno o un gestor como Azure Key Vault.
+> En produccion sustituye las credenciales por variables de entorno o un gestor como Azure Key Vault.
 
 ---
 
