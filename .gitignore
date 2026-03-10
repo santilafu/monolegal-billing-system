@@ -1,0 +1,19 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.log
+
+# Angular
+monolegal-frontend/node_modules/
+monolegal-frontend/dist/
+monolegal-frontend/.angular/
+
+# Secrets (no subir credenciales reales)
+appsettings.Production.json
+
+# OS
+.DS_Store
+Thumbs.db

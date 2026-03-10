@@ -1,0 +1,107 @@
+<div class="dashboard">
+
+  <!-- CABECERA -->
+  <header class="cabecera">
+    <div class="cabecera-info">
+      <h1>Monolegal Billing System</h1>
+      <p>Gestion de recordatorios de pago</p>
+    </div>
+    <div class="cabecera-acciones">
+      <button class="btn btn-secundario" (click)="cargarFacturas()" [disabled]="cargando">
+        {{ cargando ? 'Cargando...' : '↻ Actualizar' }}
+      </button>
+      <button class="btn btn-primario" (click)="procesarRecordatorios()" [disabled]="procesando || cargando">
+        {{ procesando ? 'Procesando...' : '⚡ Procesar Recordatorios' }}
+      </button>
+    </div>
+  </header>
+
+  <!-- TARJETAS DE RESUMEN -->
+  <div class="tarjetas" *ngIf="!cargando">
+    <div class="tarjeta tarjeta-total">
+      <span class="tarjeta-icono">📋</span>
+      <span class="tarjeta-numero">{{ facturas.length }}</span>
+      <span class="tarjeta-label">Total Facturas</span>
+    </div>
+    <div class="tarjeta tarjeta-primero">
+      <span class="tarjeta-icono">🔔</span>
+      <span class="tarjeta-numero">{{ contarPorEstado('primerrecordatorio') }}</span>
+      <span class="tarjeta-label">1er Recordatorio</span>
+    </div>
+    <div class="tarjeta tarjeta-segundo">
+      <span class="tarjeta-icono">⚠️</span>
+      <span class="tarjeta-numero">{{ contarPorEstado('segundorecordatorio') }}</span>
+      <span class="tarjeta-label">2do Recordatorio</span>
+    </div>
+    <div class="tarjeta tarjeta-desactivado">
+      <span class="tarjeta-icono">🔒</span>
+      <span class="tarjeta-numero">{{ contarPorEstado('desactivado') }}</span>
+      <span class="tarjeta-label">Desactivados</span>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="alerta alerta-error" *ngIf="error">
+    <strong>⛔ Error:</strong> {{ error }}
+  </div>
+
+  <!-- RESULTADO DEL PROCESO -->
+  <div class="alerta alerta-exito" *ngIf="resultado">
+    <h3>✅ Proceso completado</h3>
+    <p>
+      Pendientes: <strong>{{ resultado.totalPendientes }}</strong> &nbsp;|&nbsp;
+      Procesadas: <strong>{{ resultado.procesadas }}</strong> &nbsp;|&nbsp;
+      Fallidas: <strong>{{ resultado.fallidas }}</strong>
+    </p>
+    <ul *ngIf="resultado.errores.length > 0">
+      <li *ngFor="let err of resultado.errores">{{ err }}</li>
+    </ul>
+  </div>
+
+  <!-- SPINNER DE CARGA -->
+  <div class="cargando-wrapper" *ngIf="cargando">
+    <div class="spinner"></div>
+    <span class="cargando-texto">Cargando facturas desde MongoDB...</span>
+  </div>
+
+  <!-- TABLA DE FACTURAS -->
+  <div class="tabla-contenedor" *ngIf="!cargando">
+
+    <div class="tabla-header">
+      <h2>Resumen de Facturas</h2>
+      <span class="tabla-count">{{ facturas.length }} registros</span>
+    </div>
+
+    <div class="vacio" *ngIf="facturas.length === 0">
+      <span class="vacio-icono">📭</span>
+      No se encontraron facturas en la base de datos.
+    </div>
+
+    <table *ngIf="facturas.length > 0">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let factura of facturas">
+          <td><span class="cliente-nombre">{{ factura.nombreCliente }}</span></td>
+          <td><span class="cliente-email">{{ factura.emailCliente }}</span></td>
+          <td><span class="monto-valor">{{ factura.monto | currency:'EUR':'symbol':'1.2-2' }}</span></td>
+          <td><span class="fecha-valor">{{ factura.fechaFactura | date:'dd/MM/yyyy' }}</span></td>
+          <td>
+            <span [class]="'badge ' + getClaseEstado(factura.estado)">
+              {{ getTextoEstado(factura.estado) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
